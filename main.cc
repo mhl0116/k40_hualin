@@ -42,6 +42,8 @@
 #include "G4RunManager.hh"
 #include "DetectorConstruction.hh"
 #include "PhysicsList.hh"
+#include "G4VisExecutive.hh"
+
 //#include "ActionInitialization.hh"
 //
 //#include "G4UImanager.hh"
@@ -92,6 +94,21 @@ int main(int argc,char** argv)
     runManager->SetUserInitialization(new DetectorConstruction(fileConfig, opticalConfig));
     runManager->SetUserInitialization(new PhysicsList());
 
+    bool bsession=true;
+    G4VisManager* visManager=NULL;
+    if (bsession)
+      {
+        // visualization manager
+        visManager = new G4VisExecutive;
+        visManager->Initialize();
+        visManager->SetVerboseLevel("quiet");
+
+      }
+
+    if (visManager)
+      {
+        delete visManager;
+      }
     /*
     // Set user action classes
     runManager->SetUserInitialization(new ActionInitialization());

@@ -99,7 +99,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     G4Material*        Pmt_Material;         // pmt
     //G4Material*        Plastic_Material;     // plastic suppoter
     G4Material*        plastic_Material;
-    //G4Material*        PMTandSiPM_Material;            
+    G4Material*        PMTandSiPM_Material;            
     G4UserLimits *fStepLimit;  // pointer to user step limits
     G4bool fCheckOverlaps;     // option to activate checking of volumes overlaps
     std::vector<double> theta_array0;  //geometry parameters of theta and phi
