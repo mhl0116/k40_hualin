@@ -7,6 +7,9 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
 endif()
 project(coincedence_event)
 
+set(CMAKE_INSTALL_RPATH "/usr/lib64;/home/hmei/miniconda3/lib")
+find_library(LIB_X11 X11 PATHS /usr/lib64 NO_DEFAULT_PATH)
+
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui

@@ -250,7 +250,7 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes()
 {
   SetPSVolumes();
   //world size
-  G4double worldlength = 30 * m;
+  G4double worldlength = 1 * m;
   G4Orb* worldS = new G4Orb("world", worldlength);//, worldlength, worldlength);
   G4LogicalVolume *worldLV = new G4LogicalVolume(
                                                 worldS,            //its solid
@@ -276,12 +276,32 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes()
   G4Sphere *solidSupportor =
       new G4Sphere("Supportor", 0, 16.4 * cm, 0, 2 * M_PI, 0, M_PI);
 
+  // add vis attribute
+  // Create a new visualization attributes object
+   G4VisAttributes* visAttributes = new G4VisAttributes(G4Colour(1.0,0.0,0.0)); // Red color
+   G4VisAttributes* supportorVisAtt = new G4VisAttributes(G4Colour(0.5,0.5,0.5));
+   G4VisAttributes* PMTVisAtt = new G4VisAttributes(G4Colour(0.75,0.75,0.75));
+   // Set additional properties if needed
+   visAttributes->SetVisibility(true);
+
+   // Get the logical volume
+   //G4LogicalVolume* myLogicalVolume = G4LogicalVolumeStore::GetInstance()->GetVolume("DOM");
+   // Assign the visualization attributes to the logical volume
+   //if (myLogicalVolume) myLogicalVolume->SetVisAttributes(visAttributes);
+   //else G4cout << "Error: Logical Volume 'DOM' not found" << G4endl;
+
+  // end of adding vis attribute
+
   G4LogicalVolume *logicDom =
       new G4LogicalVolume(solidDomGlass, Glass_Material, "DOM");
   // G4LogicalVolume *logicGel = new G4LogicalVolume(solidGel, Gel_Material,
   // "Gel");
   G4LogicalVolume *logicSupportor =
       new G4LogicalVolume(solidSupportor, plastic_Material, "Supportor");
+  
+
+   logicDom->SetVisAttributes(visAttributes);
+   logicSupportor->SetVisAttributes(supportorVisAtt);
   // G4OpticalSurface *opGlassSurface = new G4OpticalSurface("DOM");
   // opGlassSurface->SetType(dielectric_dielectric);
   // opGlassSurface->SetFinish(polished);
@@ -335,6 +355,7 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes()
   // transform0.push_back(G4RotateX3D(M_PI) * tran_PMT);
   for (uint i = 0; i < transform0.size(); i++) {
     new G4PVPlacement(transform0[i], logicPmt, "PMT", logicDom, false, i, true);
+    logicPmt->SetVisAttributes(PMTVisAtt);
   }
 
 
@@ -371,6 +392,8 @@ void DetectorConstruction::SetPSVolumes() {
   solidPmt =
       new G4Sphere("PMT", 52 * mm, 53 * mm, 0, 2 * M_PI, 0, 45. / 180 * M_PI);
   logicPmt = new G4LogicalVolume(solidPmt, PMTandSiPM_Material, "PMT");
+   G4VisAttributes* visAttributes = new G4VisAttributes(G4Colour(0.75,0.75,0.75)); 
+  logicPmt->SetVisAttributes(visAttributes);
   //G4double chip_size_sipm = 2.7 * cm;
   //solidSipm = new G4Box("SiPM", chip_size_sipm / 2, chip_size_sipm / 2,
   //                      chip_size_sipm / 2);

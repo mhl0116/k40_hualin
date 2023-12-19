@@ -43,7 +43,9 @@
 #include "DetectorConstruction.hh"
 #include "PhysicsList.hh"
 #include "G4VisExecutive.hh"
+#include "G4UIExecutive.hh"
 
+#include "QBBC.hh"
 //#include "ActionInitialization.hh"
 //
 //#include "G4UImanager.hh"
@@ -51,7 +53,6 @@
 //#include "G4StepLimiterPhysics.hh"
 //
 //#include "G4VisExecutive.hh"
-//#include "G4UIExecutive.hh"
 //#include "time.h"
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -90,18 +91,27 @@ int main(int argc,char** argv)
     spdlog::get("console")->info("Invoke Geant4 run manager");
     G4RunManager* runManager = new G4RunManager;
 
+    G4UIExecutive* ui = nullptr;
+    ui = new G4UIExecutive(argc, argv); 
+
     // Set mandatory initialization classes
+    auto physicsList = new QBBC;
     runManager->SetUserInitialization(new DetectorConstruction(fileConfig, opticalConfig));
     runManager->SetUserInitialization(new PhysicsList());
 
     bool bsession=true;
     G4VisManager* visManager=NULL;
+    auto UImanager = G4UImanager::GetUIpointer();
+
     if (bsession)
       {
         // visualization manager
-        visManager = new G4VisExecutive;
+        visManager = new G4VisExecutive(argc, argv);
         visManager->Initialize();
         visManager->SetVerboseLevel("quiet");
+        UImanager->ApplyCommand("/control/execute init_vis.mac");
+        ui->SessionStart();
+        delete ui;
 
       }
 
