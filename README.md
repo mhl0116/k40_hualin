@@ -9,5 +9,5 @@
     cmake ..
     make 
     cd ..
-    ./build main configs/config.yaml configs/optical_properties.yaml
+    ./build/main configs/config.yaml configs/optical_properties.yaml
     ```
