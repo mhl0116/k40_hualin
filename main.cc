@@ -31,8 +31,8 @@
 
 //config and log
 #include "yaml-cpp/yaml.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+//#include "spdlog/spdlog.h"
+//#include "spdlog/sinks/stdout_color_sinks.h"
 
 //random stuff
 #include "Randomize.hh"
@@ -59,6 +59,7 @@
 int main(int argc,char** argv)
 {
 
+    /*
     // create a color multi-threaded logger
     auto console = spdlog::stdout_color_mt("console");    
     auto err_logger = spdlog::stderr_color_mt("stderr");    
@@ -68,6 +69,7 @@ int main(int argc,char** argv)
     const std::string reset = "\033[0m";
 
     //spdlog::get("console")->info("Normal text {}red text{} normal text", red, reset);
+    */
 
     if (argc != 3) {
         std::cerr << "Wrong input arguments! The right way is: ./main [config/config.yaml] [config/optical_property.yaml]";
@@ -80,7 +82,7 @@ int main(int argc,char** argv)
 
     char* opticalConfig = argv[2];
 
-    spdlog::get("console")->info("Load config files {}{}{} and {}{}{}", red, fileConfig, reset, red, opticalConfig, reset);
+    //spdlog::get("console")->info("Load config files {}{}{} and {}{}{}", red, fileConfig, reset, red, opticalConfig, reset);
 
     // set random seed
     CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine());
@@ -88,7 +90,7 @@ int main(int argc,char** argv)
     CLHEP::HepRandom::setTheSeed(se());
 
     // invoke G4
-    spdlog::get("console")->info("Invoke Geant4 run manager");
+    //spdlog::get("console")->info("Invoke Geant4 run manager");
     G4RunManager* runManager = new G4RunManager;
 
     G4UIExecutive* ui = nullptr;

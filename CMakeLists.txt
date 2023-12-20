@@ -67,8 +67,8 @@ target_link_libraries(main ${YAML_CPP_LIBRARIES})
 #     )
 # endforeach()
 
-set(spdlog_DIR /home/meihualin/.local/lib64/cmake/spdlog/)
-find_package(spdlog REQUIRED)
+#set(spdlog_DIR /home/meihualin/.local/lib64/cmake/spdlog/)
+#find_package(spdlog REQUIRED)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
